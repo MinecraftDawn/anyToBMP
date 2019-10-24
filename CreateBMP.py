@@ -81,4 +81,50 @@ with open("custom.bmp","bw") as file:
             file.write(random.randrange(256).to_bytes(1, byteorder="little"))
             file.write(random.randrange(256).to_bytes(1, byteorder="little"))
     
+class BMP_Image():
+    def __init__(self, filePath:str):
+        self.filePath = filePath
+        self.inputSize = 0
+        
+    def createImg(self):
+        with open(self.filePath, "bw") as file:
+            """
+            BMP Header
+            """
+            # ID field
+            file.write(bytes('BM', encoding="ascii"))
+            # Size of the BMP file (bytes)
+            file.write((57).to_bytes(4, byteorder="little"))
+            # Reserved bytes
+            file.write(bytes(4))
+            # Offset where the pixel array (bitmap data) can be found (static)
+            file.write((54).to_bytes(4, byteorder="little"))
+            
+            """
+            DIB Header (Device Independent Bitmap / Bitmap Information Header)
+            """
+            # Number of bytes in the DIB header (from this point)
+            file.write((40).to_bytes(4, byteorder="little"))
+            # Width of the bitmap in pixels
+            #file.write((100).to_bytes(4, byteorder="little"))
+            # Height of the bitmap in pixels
+            #file.write((100).to_bytes(4, byteorder="little"))
+            # Number of color planes being used
+            file.write((1).to_bytes(2, byteorder="little"))
+            # Number of bits per pixel
+            file.write((24).to_bytes(2, byteorder="little"))
+            # No pixel array compression used
+            file.write((0).to_bytes(4, byteorder="little"))
+            # Size of the raw bitmap data(including padding)
+            file.write((3).to_bytes(4, byteorder="little"))
+            # Horizontal resolution of the image.
+            file.write((0).to_bytes(4, byteorder="little"))
+            # Vertical resolution of the image
+            file.write((0).to_bytes(4, byteorder="little"))
+            # Number of colors in the color palette
+            file.write((0).to_bytes(4, byteorder="little"))
+            # Number of important colors used, or 0 when every color is important
+            file.write((0).to_bytes(4, byteorder="little"))
+            
+            
     
